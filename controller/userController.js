@@ -50,7 +50,7 @@ export function loginUser(req, res) {
              } else {
                  res.status(400).json("Login failed");
              }
-        }}
+        }} 
     )
     .catch(
         (err)=>{
