@@ -44,7 +44,7 @@ export function loginUser(req, res) {
                        email: user.email,
                        role: user.role,
                     
-                    }, "sajithSecretKey")
+                    }, process.env.JWT_SECRET); 
 
                  res.status(200).json({message :"Login successful", token : token});
              } else {
