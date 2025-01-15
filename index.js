@@ -19,9 +19,7 @@ app.use((req,res,next)=>{
    if(token != null){
          token = token.replace("Bearer ","");
 
-JWT_SECRET = sajithSecretKey
-JWT_SECRET = sajithSecretKey
-jwt.verify(token,process.env.JWT_SECRET,
+         jwt.verify(token,process.env.JWT_SECRET,
            (err,decoded)=>{ 
             if(!err){
                req.user = decoded;
