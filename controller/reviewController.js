@@ -59,3 +59,99 @@ export function getReviews(req,res){
 
 
 } 
+
+
+export function deleteReview(req,res){
+
+    const email = req.params.email;
+
+    if(req.user ==null){
+        res.status(401).json({
+            message:"please login and try again"
+        });
+        return;
+    }
+    if (req.user.role == "admin"){
+        Review.deleteOne({
+            email:email
+        }).then(
+            ()=>{
+                res.status(200).json({
+                    message:"Review deleted successfully"
+                });
+            }
+        ).catch(err=>{
+            res.status(500).json({
+                message:err.message
+            });
+        });
+        return;
+        
+    }
+    if(req.user.role == "customer"){
+
+        if(req.user.email == email){
+            Review.deleteOne({
+                email:email
+            }).then(
+                ()=>{
+                    res.status(200).json({
+                        message:"Review deleted successfully"
+                    });
+                }
+            ).catch(err=>{
+                res.status(500).json({
+                    message:err.message
+                });
+            });
+        }
+    }else{
+        res.status(401).json({
+            message:"You are not authorized to delete this review"
+        });
+    }
+
+}
+
+
+export function approveReview(req,res){
+
+    const email = req.params.email;
+
+    if(req.user == null){
+        res.status(401).json({
+            message:"please login and try again"
+        });
+        return;
+    }
+
+     if(req.user.role == "admin"){
+        Review.updateOne(
+            {
+                email:email
+            },
+            {
+                isApproved:true
+            }
+        ).then(
+            ()=>{
+                res.status(200).json({
+                    message:"Review approved successfully"
+                });
+            }
+        ).catch(
+            ()=>{
+                res.json(500).json(
+                    {
+                        message:"Review approval failed"
+                    }
+                )
+            }
+        )
+        
+     }else{
+            res.status(401).json({
+                message:"You are not an admin to approve this review"
+            });
+     }
+}
