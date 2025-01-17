@@ -31,21 +31,31 @@ export function addReview(req,res){
 
 }
 
-export function getReviews(req,res){
+export async function getReviews(req,res){
 
     const user = req.user;
 
     if(user == null || user.role !== "admin"){
+
+        try{
+            const Reviews = await Review.find();
+            res.json(Reviews);
+        }
+        catch(err){
+            res.status(500).json({
+                message:err.message
+            });
+        }
         
-        Review.find(
-            {
-                isApproved:true
-            }
-        ).then(
-            (reviews)=>{
-            res.json(reviews);
-        })
-        return;
+        // Review.find(
+        //     {
+        //         isApproved:true
+        //     }
+        // ).then(
+        //     (reviews)=>{
+        //     res.json(reviews);
+        // })
+        // return;
     }
 
     if(user.role === "admin"){
