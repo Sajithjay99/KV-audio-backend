@@ -31,7 +31,7 @@ export function loginUser(req, res) {
     User.findOne({
         email: data.email,
     }).then(
-        (user)=>{
+        (user)=>{ 
             if(user == null){
                 res.status(400).json("User not found");
         } else {
@@ -43,6 +43,7 @@ export function loginUser(req, res) {
                        lastName: user.lastName,
                        email: user.email,
                        role: user.role,
+                       Phone: user.Phone,
                        profilePicture: user.profilePicture,
                     
                     }, process.env.JWT_SECRET); 
@@ -60,9 +61,27 @@ export function loginUser(req, res) {
     );
     
 
+}
 
 
+export function isItAdmin(req){
+    let isAdmin = false;
 
+    if(req.user != null){
+        if(req.user.role == "admin"){
+            isAdmin = true;
+        }
+    }
+    return isAdmin;
+}
 
+export function isItCustomer(req){
+    let isCustomer = false;
 
+    if(req.user != null){
+        if(req.user.role == "customer"){
+            isCustomer = true;
+        }
+    }
+    return isCustomer;
 }
