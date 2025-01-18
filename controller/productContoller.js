@@ -30,4 +30,17 @@ export function addProduct(req, res) {
     );
 }
 
+
+export function getProducts(req,res){
+
+    Product.find().then(
+        (products)=>{
+            res.status(200).json(products);
+        }
+    ).catch(
+        (err)=>{
+            res.status(500).json("cannot get products: " + err);
+        }
+    )
+}
  
