@@ -7,11 +7,13 @@ import jwt, { decode } from "jsonwebtoken";
 import dotenv from "dotenv";
 import reviewRouter from "./routes/reviewRouter.js";
 import inquiryRouter from "./routes/inquiryRoutes.js";
+import cors from "cors";
  
 dotenv.config();
 
  
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 //pahala eke next kiyanne ilagata me responce eka yanna ona kena
