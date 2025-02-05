@@ -48,7 +48,7 @@ export function loginUser(req, res) {
                     
                     }, process.env.JWT_SECRET); 
 
-                 res.status(200).json({message :"Login successful", token : token});
+                 res.status(200).json({message :"Login successful", token : token, user: user});
              } else {
                  res.status(400).json("Login failed");
              }
